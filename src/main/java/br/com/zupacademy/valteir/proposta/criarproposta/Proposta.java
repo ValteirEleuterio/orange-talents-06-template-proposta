@@ -1,6 +1,9 @@
 package br.com.zupacademy.valteir.proposta.criarproposta;
 
+import org.springframework.util.Assert;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
 @Entity
@@ -19,6 +22,9 @@ public class Proposta {
     private String endereco;
     @Column(nullable = false)
     private BigDecimal salario;
+    @Enumerated(EnumType.STRING)
+    private EstadoProposta estado;
+
 
     public Proposta(String documento, String email, String nome, String endereco, BigDecimal salario) {
         this.documento = documento;
@@ -30,5 +36,17 @@ public class Proposta {
 
     public Long getId() {
         return id;
+    }
+
+    public String getDocumento() {
+        return documento;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setEstado(EstadoProposta estado) {
+        this.estado = estado;
     }
 }
