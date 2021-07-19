@@ -2,29 +2,24 @@ package br.com.zupacademy.valteir.proposta.config.errors;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
+import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+
 import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
 
 @JsonInclude(NON_NULL)
 public class ErroResponse {
 
-    private String campo;
-    private String mensagem;
+    private Collection<String> mensagens;
 
-    public ErroResponse(String campo, String mensagem) {
-        this.campo = campo;
-        this.mensagem = mensagem;
+    public ErroResponse(@NotNull Collection<String> mensagens) {
+        this.mensagens = mensagens;
     }
 
-    public ErroResponse(String mensagem) {
-        this.mensagem = mensagem;
+    public Collection<String> getMensagens() {
+        return mensagens;
     }
-
-    public String getCampo() {
-        return campo;
-    }
-    public String getMensagem() {
-        return mensagem;
-    }
-
-
 }

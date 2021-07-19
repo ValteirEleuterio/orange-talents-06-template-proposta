@@ -1,47 +1,54 @@
 package br.com.zupacademy.valteir.proposta.config.errors;
 
+import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.server.ResponseStatusException;
 
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestControllerAdvice
 public class ValidationErrorHandler {
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler({MethodArgumentNotValidException.class, BindException.class})
-    public List<ErroResponse> handle(BindException exception) {
+    public ErroResponse handle(BindException exception) {
         BindingResult result =  exception.getBindingResult();
 
-        List<ErroResponse> erros = new ArrayList<>();
-
-        result.getFieldErrors().forEach(e -> erros.add(
-                new ErroResponse(e.getField(),e.getDefaultMessage())));
+        List<String> erros =  result.getFieldErrors().stream()
+                .map(e -> e.getField() + " " + e.getDefaultMessage()).collect(Collectors.toList());
 
         if(erros.isEmpty())
-            result.getAllErrors().forEach(e -> erros.add(new ErroResponse(e.getDefaultMessage())));
+            erros = result.getAllErrors().stream()
+                    .map(DefaultMessageSourceResolvable::getDefaultMessage).collect(Collectors.toList());
 
-        return erros;
+        return new ErroResponse(erros);
     }
 
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler({IllegalStateException.class, IllegalArgumentException.class})
     public ErroResponse handle(RuntimeException exception) {
-        return new ErroResponse(exception.getMessage());
+        return new ErroResponse(Collections.singleton(exception.getMessage()));
     }
 
+    @ExceptionHandler(ResponseStatusException.class)
+    public ResponseEntity<ErroResponse> handle(ResponseStatusException exception) {
+        return ResponseEntity.status(exception.getStatus()).body(new ErroResponse(Collections.singleton(exception.getReason())));
+    }
 
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(Exception.class)
     public ErroResponse handle(Exception exception) {
         exception.printStackTrace();
-        return new ErroResponse("Ocorreu um erro interno\n"+ exception.getMessage());
+        return new ErroResponse(Collections.singleton("Ocorreu um erro interno\n" + exception.getMessage()));
     }
 }

@@ -23,7 +23,7 @@ public class CriarPropostaController {
     @PostMapping("/propostas")
     @Transactional
     public ResponseEntity<?> criar(@Valid @RequestBody PropostaRequest request, UriComponentsBuilder uriBuilder) {
-        Proposta proposta = request.toModel();
+        Proposta proposta = request.toModel(manager);
 
         manager.persist(proposta);
 
