@@ -24,7 +24,10 @@ public class Proposta {
     private BigDecimal salario;
     @Enumerated(EnumType.STRING)
     private EstadoProposta estado;
+    private String numeroCartao;
 
+    @Deprecated
+    private Proposta() {}
 
     public Proposta(String documento, String email, String nome, String endereco, BigDecimal salario) {
         this.documento = documento;
@@ -48,5 +51,10 @@ public class Proposta {
 
     public void setEstado(EstadoProposta estado) {
         this.estado = estado;
+    }
+
+    public void setNumeroCartao(@NotNull String numeroCartao) {
+        Assert.hasText(numeroCartao, "Houve um problema, o numero do cartão não pode ser nulo nem vazio");
+        this.numeroCartao = numeroCartao;
     }
 }
