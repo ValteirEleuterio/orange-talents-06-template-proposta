@@ -57,4 +57,8 @@ public class Proposta {
         Assert.hasText(numeroCartao, "Houve um problema, o numero do cartão não pode ser nulo nem vazio");
         this.numeroCartao = numeroCartao;
     }
+
+    public EstadoProposta getEstado() {
+        return estado;
+    }
 }
