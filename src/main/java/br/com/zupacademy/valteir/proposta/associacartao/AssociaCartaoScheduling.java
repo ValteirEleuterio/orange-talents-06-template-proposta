@@ -27,14 +27,14 @@ public class AssociaCartaoScheduling {
 
     @Scheduled(fixedDelayString = "${cartoes.periodicidade}")
     private void processa() {
-        String sql = "select p from Proposta p where p.estado = 'ELEGIVEL' and p.numeroCartao is null";
+        String sql = "select p from Proposta p where p.estado = 'ELEGIVEL' and p.cartao is null";
         TypedQuery<Proposta> query = manager.createQuery(sql, Proposta.class);
         List<Proposta> propostasSemCartao = query.getResultList();
 
         propostasSemCartao.forEach(proposta -> {
             try {
                 CartaoResponse cartao = cartoesApi.cartoes(String.valueOf(proposta.getId()));
-                proposta.setNumeroCartao(cartao.getId());
+                proposta.setCartao(cartao.toModel());
                 executorTransacao.atualizaEComita(proposta);
             } catch (FeignException e) { }
         });

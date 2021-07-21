@@ -24,7 +24,8 @@ public class Proposta {
     private BigDecimal salario;
     @Enumerated(EnumType.STRING)
     private EstadoProposta estado;
-    private String numeroCartao;
+    @OneToOne(cascade = CascadeType.MERGE)
+    private Cartao cartao;
 
     @Deprecated
     private Proposta() {}
@@ -53,9 +54,9 @@ public class Proposta {
         this.estado = estado;
     }
 
-    public void setNumeroCartao(@NotNull String numeroCartao) {
-        Assert.hasText(numeroCartao, "Houve um problema, o numero do cartão não pode ser nulo nem vazio");
-        this.numeroCartao = numeroCartao;
+    public void setCartao(@NotNull Cartao cartao) {
+        Assert.notNull(cartao, "Houve um problema, o cartão não pode ser nulo");
+        this.cartao = cartao;
     }
 
     public EstadoProposta getEstado() {
