@@ -14,6 +14,8 @@ public class Cartao {
     private String numeroCartao;
     @OneToOne(mappedBy = "cartao", cascade = CascadeType.MERGE)
     private BloqueioCartao bloqueio;
+    @Enumerated(EnumType.STRING)
+    private EstadoCartao estado = EstadoCartao.DESBLOQUEADO;
 
     @Deprecated
     private Cartao() {}
@@ -33,4 +35,15 @@ public class Cartao {
         this.bloqueio = new BloqueioCartao(userAgent, remoteAddr, this);
     }
 
+    public void setEstado(EstadoCartao estado) {
+        this.estado = estado;
+    }
+
+    public String getNumeroCartao() {
+        return this.numeroCartao;
+    }
+
+    public Long getId() {
+        return this.id;
+    }
 }
