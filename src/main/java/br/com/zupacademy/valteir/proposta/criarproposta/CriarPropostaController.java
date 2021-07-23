@@ -1,5 +1,6 @@
 package br.com.zupacademy.valteir.proposta.criarproposta;
 
+import br.com.zupacademy.valteir.proposta.config.metricas.MinhasMetricas;
 import br.com.zupacademy.valteir.proposta.utils.ExecutorTransacao;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,11 +17,13 @@ public class CriarPropostaController {
     private EntityManager manager;
     private AnalisarProposta analisarProposta;
     private ExecutorTransacao executorTransacao;
+    private MinhasMetricas metricas;
 
-    public CriarPropostaController(EntityManager manager, AnalisarProposta analisarProposta, ExecutorTransacao executorTransacao) {
+    public CriarPropostaController(EntityManager manager, AnalisarProposta analisarProposta, ExecutorTransacao executorTransacao, MinhasMetricas metricas) {
         this.manager = manager;
         this.analisarProposta = analisarProposta;
         this.executorTransacao = executorTransacao;
+        this.metricas = metricas;
     }
 
     @PostMapping("/propostas")
@@ -33,6 +36,7 @@ public class CriarPropostaController {
         proposta.setEstado(estado);
         executorTransacao.atualizaEComita(proposta);
 
+        metricas.propostaCriada();
         return ResponseEntity.created(uriBuilder.path("/propostas/{id}").buildAndExpand(proposta.getId()).toUri()).build();
     }
 }
