@@ -9,18 +9,15 @@ import feign.FeignException;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
-import javax.persistence.EntityManager;
 import javax.validation.constraints.NotNull;
 
 @Service
 public class BloqueiaCartaoSistemaLegado {
 
-    private EntityManager manager;
     private CartoesApi cartoesApi;
     private ExecutorTransacao executorTransacao;
 
-    public BloqueiaCartaoSistemaLegado(EntityManager manager, CartoesApi cartoesApi, ExecutorTransacao executorTransacao) {
-        this.manager = manager;
+    public BloqueiaCartaoSistemaLegado(CartoesApi cartoesApi, ExecutorTransacao executorTransacao) {
         this.cartoesApi = cartoesApi;
         this.executorTransacao = executorTransacao;
     }

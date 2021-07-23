@@ -1,5 +1,6 @@
 package br.com.zupacademy.valteir.proposta.cartoesapi;
 
+import br.com.zupacademy.valteir.proposta.criaravisoviagem.ViagemRequest;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,4 +12,7 @@ public interface CartoesApi {
 
     @RequestMapping(method = RequestMethod.POST, value = "/api/cartoes/{id}/bloqueios", consumes = "application/json")
     BloqueioResponse bloqueios(@PathVariable("id") String idCartao, BloqueioRequest request);
+
+    @RequestMapping(method = RequestMethod.POST, value = "/api/cartoes/{id}/avisos")
+    void avisos(@PathVariable("id") String idCartao, ViagemRequest request);
 }

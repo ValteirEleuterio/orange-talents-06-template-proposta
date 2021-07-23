@@ -12,20 +12,20 @@ public class ViagemRequest {
 
     @NotBlank
     private String destino;
-    @JsonFormat(pattern = "dd/MM/yyyy", shape = JsonFormat.Shape.STRING)
+    @JsonFormat(pattern = "yyyy-MM-dd", shape = JsonFormat.Shape.STRING)
     @Future
     @NotNull
-    private LocalDate dataTermino;
+    private LocalDate validoAte;
 
     public Viagem toModel(Cartao cartao, String userAgent, String remoteAddr) {
-        return new Viagem(cartao, destino, dataTermino, userAgent, remoteAddr);
+        return new Viagem(cartao, destino, validoAte, userAgent, remoteAddr);
     }
 
     public String getDestino() {
         return destino;
     }
 
-    public LocalDate getDataTermino() {
-        return dataTermino;
+    public LocalDate getValidoAte() {
+        return validoAte;
     }
 }
