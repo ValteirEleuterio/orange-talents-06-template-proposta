@@ -47,4 +47,9 @@ public class PropostaRequest {
         query.setParameter("pDocumento", documento);
         return query.getResultList().iterator().hasNext();
     }
+
+
+    public String getEmail() {
+        return email;
+    }
 }
