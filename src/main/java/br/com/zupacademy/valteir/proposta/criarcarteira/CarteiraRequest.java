@@ -12,7 +12,7 @@ public class CarteiraRequest {
     @Email
     private String email;
     @NotBlank
-    @Pattern(regexp = "PAYPAL")
+    @Pattern(regexp = "PAYPAL|SAMSUNG_PAY")
     private String carteira;
 
     public CarteiraRequest(String email, String carteira) {
