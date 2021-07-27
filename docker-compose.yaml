@@ -3,6 +3,8 @@ services:
 
   zookeeper:
     image: "confluentinc/cp-zookeeper:5.2.1"
+    networks:
+      - proposta
     environment:
       ZOOKEEPER_CLIENT_PORT: 2181
       ZOOKEEPER_TICK_TIME: 2000
@@ -10,6 +12,8 @@ services:
 
   kafka:
     image: "confluentinc/cp-kafka:5.2.1"
+    networks:
+      - proposta
     ports:
       - 9092:9092
     depends_on:
@@ -24,6 +28,8 @@ services:
 
   postgres:
     image: 'postgres:alpine'
+    networks:
+      - proposta
     volumes:
       - postgres-volume:/var/lib/postgresql/data
     ports:
@@ -36,6 +42,8 @@ services:
 
   keycloak:
     image: jboss/keycloak
+    networks:
+      - proposta
     ports:
       - 18443:8443
       - 18080:8080
@@ -66,6 +74,8 @@ services:
 
   analise:
     image: 'zupacademy/analise-financeira'
+    networks:
+      - proposta
     ports:
       - 9999:9999
     environment:
@@ -76,6 +86,8 @@ services:
 
   contas:
     image: 'zupacademy/contas'
+    networks:
+      - proposta
     ports:
       - 8888:8888
     environment:
@@ -85,6 +97,8 @@ services:
 
   transacoes:
     image: 'zupacademy/transacoes'
+    networks:
+      - proposta
     ports:
       - 7777:7777
     depends_on:
@@ -97,6 +111,8 @@ services:
 
   jaeger:
     image: jaegertracing/all-in-one
+    networks:
+      - proposta
     ports:
       - 5775:5775/udp
       - 6831:6831/udp
@@ -112,18 +128,23 @@ services:
   prometheus:
     image: prom/prometheus
     volumes:
-     - prometheus-volume:/etc/prometheus/
-    network_mode: bridge
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus-volume:/etc/prometheus/
+    networks:
+      - proposta
     ports:
-      - "9090:9090"
+      - 9090:9090
+    expose:
+      - 9090
 
   grafana:
     image: grafana/grafana
     volumes:
       - grafana-volume:/var/lib/grafana
-    network_mode: bridge
     ports:
       - "3000:3000"
+    networks:
+      - proposta
     depends_on:
       - prometheus
 
@@ -131,6 +152,8 @@ services:
     image: vault:1.5.3
     ports:
       - 8200:8200
+    networks:
+      - proposta
     environment:
       VAULT_DEV_ROOT_TOKEN_ID: ee413645-dbe8-4848-afc6-6bb2768ada75
       VAULT_TOKEN: ee413645-dbe8-4848-afc6-6bb2768ada75
@@ -141,6 +164,8 @@ services:
     container_name: proposta-db
     ports:
     - "5433:5432"
+    networks:
+      - proposta
     environment:
       POSTGRES_PASSWORD: proposta
       POSTGRES_USER: proposta
@@ -151,17 +176,25 @@ services:
       dockerfile: proposta.dockerfile
       context: .
     image: oranget/proposta
-    container_name: proposta-api
     ports:
       - "8080:8080"
     depends_on:
       - "postgres-proposta"
+    networks:
+      - proposta
     environment:
       - HOST_BANCO=proposta-db:5432
       - ANALISE_URL=http://analise:9999
       - CARTOES_URL=http://contas:8888
+      - KEYCLOAK_ISSUER_URI=http://keycloak:8080/auth/realms/nosso-cartao
+      - KEYCLOAK_JWKS_URI=http://keycloak:8080/auth/realms/nosso-cartao/protocol/openid-connect/certs
+      - JAEGER_ENDPOINT=http://jaeger:14268/api/traces
 
 volumes:
   grafana-volume:
   prometheus-volume:
   postgres-volume:
+
+networks:
+  proposta:
+    driver: bridge
