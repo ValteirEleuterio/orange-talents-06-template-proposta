@@ -30,8 +30,8 @@ public class Proposta {
     @Deprecated
     private Proposta() {}
 
-    public Proposta(String documento, String email, String nome, String endereco, BigDecimal salario) {
-        this.documento = documento;
+    public Proposta(DocumentoLimpo documento, String email, String nome, String endereco, BigDecimal salario) {
+        this.documento = documento.encrypt();
         this.email = email;
         this.nome = nome;
         this.endereco = endereco;
@@ -43,7 +43,7 @@ public class Proposta {
     }
 
     public String getDocumento() {
-        return documento;
+        return DocumentoLimpo.decrypt(documento);
     }
 
     public String getNome() {
