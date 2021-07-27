@@ -1,8 +1,8 @@
 package br.com.zupacademy.valteir.proposta.criarproposta;
 
-import br.com.zupacademy.valteir.proposta.analiseapi.AnaliseApi;
-import br.com.zupacademy.valteir.proposta.analiseapi.AnaliseRequest;
-import br.com.zupacademy.valteir.proposta.analiseapi.AnaliseResponse;
+import br.com.zupacademy.valteir.proposta.outrossistemas.analiseapi.AnaliseApi;
+import br.com.zupacademy.valteir.proposta.outrossistemas.analiseapi.AnaliseRequest;
+import br.com.zupacademy.valteir.proposta.outrossistemas.analiseapi.AnaliseResponse;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import feign.FeignException;

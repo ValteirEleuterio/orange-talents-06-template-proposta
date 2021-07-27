@@ -1,4 +1,4 @@
-package br.com.zupacademy.valteir.proposta.analiseapi;
+package br.com.zupacademy.valteir.proposta.outrossistemas.analiseapi;
 
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.RequestMapping;

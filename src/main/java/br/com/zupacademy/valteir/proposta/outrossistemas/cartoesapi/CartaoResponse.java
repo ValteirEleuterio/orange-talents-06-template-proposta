@@ -1,4 +1,4 @@
-package br.com.zupacademy.valteir.proposta.cartoesapi;
+package br.com.zupacademy.valteir.proposta.outrossistemas.cartoesapi;
 
 import br.com.zupacademy.valteir.proposta.criarproposta.Cartao;
 

@@ -1,4 +1,4 @@
-package br.com.zupacademy.valteir.proposta.analiseapi;
+package br.com.zupacademy.valteir.proposta.outrossistemas.analiseapi;
 
 import br.com.zupacademy.valteir.proposta.criarproposta.Proposta;
 

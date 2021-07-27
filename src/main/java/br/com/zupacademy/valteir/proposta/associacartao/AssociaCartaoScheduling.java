@@ -1,7 +1,7 @@
 package br.com.zupacademy.valteir.proposta.associacartao;
 
-import br.com.zupacademy.valteir.proposta.cartoesapi.CartaoResponse;
-import br.com.zupacademy.valteir.proposta.cartoesapi.CartoesApi;
+import br.com.zupacademy.valteir.proposta.outrossistemas.cartoesapi.CartaoResponse;
+import br.com.zupacademy.valteir.proposta.outrossistemas.cartoesapi.CartoesApi;
 import br.com.zupacademy.valteir.proposta.criarproposta.Proposta;
 import br.com.zupacademy.valteir.proposta.utils.ExecutorTransacao;
 import feign.FeignException;
@@ -26,7 +26,7 @@ public class AssociaCartaoScheduling {
     }
 
     @Scheduled(fixedDelayString = "${cartoes.periodicidade}")
-    private void processa() {
+    public void processa() {
         String sql = "select p from Proposta p where p.estado = 'ELEGIVEL' and p.cartao is null";
         TypedQuery<Proposta> query = manager.createQuery(sql, Proposta.class);
         List<Proposta> propostasSemCartao = query.getResultList();

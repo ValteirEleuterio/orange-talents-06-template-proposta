@@ -1,7 +1,7 @@
 package br.com.zupacademy.valteir.proposta.criarbloqueiocartao;
 
-import br.com.zupacademy.valteir.proposta.cartoesapi.BloqueioRequest;
-import br.com.zupacademy.valteir.proposta.cartoesapi.CartoesApi;
+import br.com.zupacademy.valteir.proposta.outrossistemas.cartoesapi.BloqueioRequest;
+import br.com.zupacademy.valteir.proposta.outrossistemas.cartoesapi.CartoesApi;
 import br.com.zupacademy.valteir.proposta.criarproposta.Cartao;
 import br.com.zupacademy.valteir.proposta.criarproposta.EstadoCartao;
 import br.com.zupacademy.valteir.proposta.utils.ExecutorTransacao;

@@ -1,6 +1,6 @@
 package br.com.zupacademy.valteir.proposta.criarcarteira;
 
-import br.com.zupacademy.valteir.proposta.cartoesapi.CartoesApi;
+import br.com.zupacademy.valteir.proposta.outrossistemas.cartoesapi.CartoesApi;
 import feign.FeignException;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
